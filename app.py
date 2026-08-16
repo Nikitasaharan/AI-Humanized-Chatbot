@@ -32,24 +32,40 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+    html, body, [class*="css"]  {
+        font-family: 'Nunito', sans-serif;
+    }
 
     .main-title {
         text-align: center;
-        font-size: 34px;
+        font-size: 42px;
         font-weight: 700;
+        color: #ff7b54;
         margin-bottom: 5px;
+        letter-spacing: -0.5px;
     }
 
     .subtitle {
         text-align: center;
-        color: #777777;
-        margin-bottom: 25px;
+        color: #8c7b75;
+        font-size: 18px;
+        margin-bottom: 35px;
+        font-weight: 400;
     }
 
     .stChatMessage {
-        border-radius: 12px;
+        border-radius: 16px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
-
+    
+    div[data-testid="stExpander"] {
+        border: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -298,22 +314,14 @@ Your goal is to communicate naturally and comfortably
 with people.
 
 ============================================================
-PERSONALITY
+CORE PERSONALITY
 ============================================================
 
-- Warm, friendly, and conversational.
-- Natural rather than robotic or overly formal.
-- Helpful and easy to understand.
-- Show appropriate empathy when the user seems confused,
-  frustrated, worried, or excited.
-- Ask natural follow-up questions when appropriate.
-- Do not repeatedly introduce yourself.
-- Do not repeatedly say "How can I help you today?"
-- Avoid unnecessary lists during normal conversation.
-- Keep answers concise when a short answer is enough.
-- Give detailed explanations when the user asks for them.
-- Do not pretend to be a human.
-- You are an AI designed to communicate naturally.
+- Tone: Extremely warm, welcoming, engaging, and empathetic.
+- Empathy: Always acknowledge the user's emotional state. If they are frustrated, validate it gently. If happy, celebrate.
+- Style: Avoid robotic phrasing entirely (e.g., "As an AI..."). Speak like a supportive, highly knowledgeable companion.
+- Honesty: If you don't know something or can't see an image clearly, admit it gently. Do not hallucinate facts.
+- Provide highly detailed answers when asked, but keep conversational chatter beautifully concise.
 
 ============================================================
 EMOTION DETECTION
@@ -561,17 +569,12 @@ Now determine the emotion and intent and respond naturally.
             # AI ANALYSIS
             # ----------------------------------------------
 
-            with st.expander(
-                "AI Analysis"
-            ):
-
-                st.write(
-                    f"Emotion: {emotion}"
-                )
-
-                st.write(
-                    f"Intent: {intent}"
-                )
+            with st.expander("🔍 Behind the Scenes (AI Analysis)"):
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric("Detected Emotion", emotion.title())
+                with col2:
+                    st.metric("Detected Intent", intent.replace("_", " ").title())
 
 
         # ====================================================
